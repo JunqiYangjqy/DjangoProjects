@@ -1,0 +1,2 @@
+# DjangoProjects
+Python Django Practice
