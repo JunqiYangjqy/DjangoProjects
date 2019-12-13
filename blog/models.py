@@ -62,3 +62,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    # Self define get_absolute_url method
+    def get_absolute_url(self):
+        # This reverse(), first parametre means
+        # a method named detail under the app named blog
+        return reverse('blog:detail',kwargs={'pk': self.pk})
+
