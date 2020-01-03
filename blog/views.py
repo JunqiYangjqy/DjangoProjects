@@ -1,6 +1,8 @@
+import markdown
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Post
+
 # Create your views here.
 
 def index(request):
@@ -31,4 +33,22 @@ def detail(request,pk):
 
     # get_object_or_404() will return 404 error if requested resources 
     # (in this situation is article) not exist.
+    
+    """
+    将 Markdown 格式的文本解析成 HTML 文本非常简单，
+    只需调用这个库的 markdown 方法。
+    我们书写的博客文章内容存在 Post 的 body 属性里，
+    回到我们的详情页视图函数，
+    对 post 的 body 的值做一下解析，
+    把 Markdown 文本转为 HTML 文本再传递给模板
+    """
+    post.body = markdown.markdown(
+        post.body,
+        extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            'markdown.extensions.toc',
+        ]
+    )
+
     return render(request,'blog/detail.html',context={'post': post})
